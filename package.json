@@ -1,0 +1,20 @@
+{
+	"name": "generosity",
+	"version": "1.0.0",
+	"description": "A winter shopping app.",
+	"main": "index.js",
+	"scripts": {
+		"start": "http-server -c-1"
+	},
+	"keywords": [
+		"pwa",
+		"progressive",
+		"web",
+		"app"
+	],
+	"author": "Team Placeholder",
+	"license": "ISC",
+	"devDependencies": {
+		"http-server": "^0.10.0"
+	}
+}
