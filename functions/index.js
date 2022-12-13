@@ -43,7 +43,9 @@ exports.savePosts = functions
 				const fields = {};
 
 				// This callback will be invoked for each file uploaded
-				busboy.on("file", (fieldname, file, filename, encoding, mimetype) => {
+
+				busboy.on("file", (fieldname, file, info) => {
+					const { filename, encoding, mimetype } = info;
 					console.log(
 						`File [${fieldname}] filename: ${filename}, encoding: ${encoding}, mimetype: ${mimetype}`
 					);
