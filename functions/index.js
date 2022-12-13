@@ -7,6 +7,7 @@ var UUID = require("uuid-v4");
 var os = require("os");
 var Busboy = require("busboy");
 var path = require("path");
+const filePath = path.join(os.tmpdir());
 
 // // Create and Deploy Your First Cloud Functions
 // // https://firebase.google.com/docs/functions/write-firebase-functions
@@ -49,7 +50,7 @@ exports.savePosts = functions
 					console.log(
 						`File [${fieldname}] filename: ${filename}, encoding: ${encoding}, mimetype: ${mimetype}`
 					);
-					const filepath = path.join(os.tmpdir(), filename);
+					const filepath = path.join(filePath, filename);
 					upload = { file: filepath, type: mimetype };
 					file.pipe(fs.createWriteStream(filepath));
 				});
@@ -73,14 +74,12 @@ exports.savePosts = functions
 				busboy.on("finish", () => {
 					var bucket = gcs.bucket("xmasgift-365d6.appspot.com");
 					bucket.upload(
-						upload.file,
+						filePath,
 						{
 							uploadType: "media",
 							metadata: {
-								metadata: {
-									contentType: upload.type,
-									firebaseStorageDownloadTokens: uuid,
-								},
+								mimetype: "Content-Type",
+								firebaseStorageDownloadTokens: uuid,
 							},
 						},
 						function (err, file) {
